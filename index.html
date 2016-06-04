@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Week4 Assignment</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Week4 Assignment">
+  <meta name="author" content="Yuji.H">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/frameworks/io2012/js/slides" 
+    src="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Week4 Assignment</h1>
+    <h2>Developing Data Product</h2>
+    <p>Yuji.H<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Probability distribution</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>In statistics, a probability distribution assigns a probability to each measurable 
+subset of the possible outcomes of a random experiment.</p>
+
+<p>My application enable us to visualize following probability distribution.</p>
+
+<ul>
+<li>Normal distribution</li>
+<li>Uniform distribution</li>
+<li>poisson distribution</li>
+<li>Gamma distribution</li>
+<li>Exponential distribution</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>ui.R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Input :t1(select input : &quot;normal&quot;,&quot;exponential&quot;,&quot;poisson&quot;,&quot;gamma&quot;,&quot;uniform&quot;)</li>
+<li>Inpput:s1(sliderinput,  decide sample size)</li>
+<li>Output:p1(renderplot of selected probability distribution)</li>
+<li>Output:v1(length of samples, basics statistics)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>server.R(1)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Rely on input t1, different histogram is illustrated.</li>
+</ul>
+
+<pre><code class="r">   if(input$t1 == &quot;normal&quot;){
+      samples&lt;&lt;-rnorm(input$s1)
+      hist(samples)}     ## Normal Distribution
+   if(input$t1 == &quot;exponential&quot;){
+      samples&lt;&lt;-rexp(input$s1,5)
+      hist(samples)   }  ## Exponential Distribution
+   if(input$t1 == &quot;poisson&quot;){
+      samples&lt;&lt;-rpois(input$s1,5)
+      hist(samples)   }  ## Poissoon Distribution
+   if(input$t1 == &quot;gamma&quot;){
+      samples&lt;&lt;- rgamma(input$s1,shape=10,scale=1/5)
+      hist(samples)   }  ## Gamma Distribution
+   if(input$t1==&quot;uniform&quot;){ 
+      samples&lt;&lt;-runif(input$s1)
+      hist(samples)}     ## Uniform Distribution
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>server.R(2)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Basic statistical quantities of selected distribution are displayed under histogram.</li>
+</ul>
+
+<pre><code class="r">    output$v1&lt;-renderPrint({
+    input$s1;print(length(samples));summary(samples)})
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Probability distribution'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='ui.R'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='server.R(1)'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='server.R(2)'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="/Library/Frameworks/R.framework/Versions/3.2/Resources/library/slidifyLibraries/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
