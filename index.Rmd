@@ -1,0 +1,81 @@
+---
+title       : Week4 Assignment 
+subtitle    : Developing Data Product
+author      : Yuji.H
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : draft # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Probability distribution
+In statistics, a probability distribution assigns a probability to each measurable 
+subset of the possible outcomes of a random experiment.
+
+My application enable us to visualize following probability distribution.
+
+
+- Normal distribution
+- Uniform distribution
+- poisson distribution
+- Gamma distribution
+- Exponential distribution
+
+
+---
+##  ui.R
+
+- Input :t1(select input : "normal","exponential","poisson","gamma","uniform")
+- Inpput:s1(sliderinput,  decide sample size)
+- Output:p1(renderplot of selected probability distribution)
+- Output:v1(length of samples, basics statistics)
+
+
+---
+
+## server.R(1)
+
+- Rely on input t1, different histogram is illustrated.
+
+```{r, eval=FALSE, echo=TRUE}
+
+   if(input$t1 == "normal"){
+      samples<<-rnorm(input$s1)
+      hist(samples)}     ## Normal Distribution
+   if(input$t1 == "exponential"){
+      samples<<-rexp(input$s1,5)
+      hist(samples)   }  ## Exponential Distribution
+   if(input$t1 == "poisson"){
+      samples<<-rpois(input$s1,5)
+      hist(samples)   }  ## Poissoon Distribution
+   if(input$t1 == "gamma"){
+      samples<<- rgamma(input$s1,shape=10,scale=1/5)
+      hist(samples)   }  ## Gamma Distribution
+   if(input$t1=="uniform"){ 
+      samples<<-runif(input$s1)
+      hist(samples)}     ## Uniform Distribution
+```
+
+
+---
+
+## server.R(2)
+
+- Basic statistical quantities of selected distribution are displayed under histogram.
+
+
+```{r,echo=TRUE, eval=FALSE}
+    output$v1<-renderPrint({
+    input$s1;print(length(samples));summary(samples)})
+}
+
+
+
+
+
+
+
+
